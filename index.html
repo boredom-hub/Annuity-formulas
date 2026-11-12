@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Annuity Index Cards – CEE 109</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root{--desk:#e7ecef;--card:#fffefb;--ink:#1d2733;--line:#b9d3ea;--rule:#d8443f;--muted:#5d6b7a;--chip:#eef4fa;--hl:#fff1a8;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--desk:#161b21;--card:#222a33;--ink:#eaf0f6;--line:#34526e;--rule:#ff7a73;--muted:#9fb0c1;--chip:#2b3641;--hl:#5b4f12}}
+:root[data-theme="dark"]{--desk:#161b21;--card:#222a33;--ink:#eaf0f6;--line:#34526e;--rule:#ff7a73;--muted:#9fb0c1;--chip:#2b3641;--hl:#5b4f12}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--desk);color:var(--ink);font-family:"Atkinson Hyperlegible",system-ui,sans-serif;line-height:1.5}
+header{max-width:1100px;margin:0 auto;padding:28px 20px 8px;display:flex;flex-wrap:wrap;gap:12px;align-items:end;justify-content:space-between}
+h1{margin:0;font-size:1.5rem}
+header p{margin:4px 0 0;color:var(--muted);font-size:.95rem}
+.tools button{font:inherit;padding:8px 14px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);border-radius:6px;cursor:pointer}
+main{max-width:1100px;margin:0 auto;padding:16px 20px 48px;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,420px),1fr));gap:22px}
+.card{all:unset;display:block;cursor:pointer;background:
+ linear-gradient(var(--rule),var(--rule)) 0 46px/100% 2px no-repeat,
+ repeating-linear-gradient(transparent 0 27px,var(--line) 27px 28px) 0 48px/100% calc(100% - 48px) no-repeat,var(--card);
+ border-radius:6px;box-shadow:0 1px 0 rgba(0,0,0,.08),0 8px 18px -10px rgba(0,0,0,.35);padding:12px 18px 18px;min-height:300px}
+.card:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.card .top{height:34px;display:flex;justify-content:space-between;align-items:baseline;font-weight:700;font-size:1.1rem}
+.card .top small{font-weight:400;color:var(--muted);font-size:.8rem}
+.front,.back{display:none;padding-top:14px}
+.card[data-side="front"] .front,.card[data-side="back"] .back{display:block}
+.front .cue{font-size:1.05rem;margin:26px 0 0}
+.front .hint{color:var(--muted);font-size:.85rem;margin-top:70px}
+.f{font-size:.95rem;background:var(--chip);border-left:3px solid var(--rule);padding:6px 10px;margin:8px 0;overflow-x:auto;}
+.back p,.back li{margin:6px 0;font-size:.92rem}
+.back ul{padding-left:18px;margin:6px 0}
+.ex{background:var(--hl);padding:6px 10px;border-radius:4px;font-size:.88rem;margin-top:10px}
+mjx-container[display="true"]{margin:.4em 0!important}
+@media print{body{background:#fff}header .tools{display:none}.card{break-inside:avoid;box-shadow:none;border:1px solid #999}.front,.back{display:block!important}.front .hint{display:none}.front .cue{margin:8px 0 12px}}
+</style>
+</head>
+<body>
+<header>
+<div><h1>Annuity index cards</h1><p>Tap a card to flip between the topic and its formulas.</p></div>
+<div class="tools"><button id="all" type="button">Show all formulas</button></div>
+</header>
+<main id="deck"></main>
+<script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" async></script>
+<script>
+const cards=[
+{t:"Annuity: what it is",q:"Define an annuity and name the five types covered.",b:String.raw`
+<p>A series of <b>equal payments</b> at <b>equal time intervals</b> for a set period (installments, rent, retirement income).</p>
+<ul><li><b>Ordinary:</b> payments at the end of each period</li><li><b>Due:</b> payments at the beginning of each period</li><li><b>Deferred:</b> first payment comes several periods later</li><li><b>Perpetuity:</b> payments never end</li><li><b>Continuous compounding:</b> interest compounds continuously</li></ul>
+<div class="f">\[ i=\frac{r}{m}\qquad n=m\times t \]</div>
+<p>$P$ = present worth, $F$ = future worth, $A$ = equal periodic payment, $i$ = rate per period, $n$ = number of payments.</p>`},
+{t:"Ordinary annuity",q:"Write P and F for equal payments at the END of each period.",b:String.raw`
+<div class="f">\[ P=\frac{A}{i}\left[\frac{(1+i)^{n}-1}{(1+i)^{n}}\right] \]
+\[ F=\frac{A}{i}\left[(1+i)^{n}-1\right] \]</div>
+<p><b>Factors:</b> $P/A$ uniform series present worth · $A/P$ capital recovery · $F/A$ uniform series compound amount · $A/F$ sinking fund</p>
+<p>$F$ comes from $P$: plug $P$ into $F=P(1+i)^{n}$ and the $(1+i)^{n}$ cancels.</p>
+<div class="ex">Debt ₱100,000, 6 yrs, 12%: $A=$ ₱24,322.57<br>Monthly: $i=0.05/12$, $n=12(30)=360$</div>`},
+{t:"Annuity due",q:"Payments at the BEGINNING of each period. How do P and F change?",b:String.raw`
+<div class="f">\[ P=A+\frac{A}{i}\left[\frac{(1+i)^{n-1}-1}{(1+i)^{n-1}}\right] \]
+\[ F=\frac{A}{i}\left[(1+i)^{n+1}-1\right]-A \]</div>
+<p>The first payment is already at time 0 (so it adds $A$ to $P$), and the rest is an ordinary annuity of $n-1$ payments.</p>
+<div class="ex">₱5,000 at the start of each year, 18 yrs, 8% compounded continuously ($i=0.0832$): $F=$ ₱209,452.57 · $P=$ ₱49,625.13</div>`},
+{t:"Deferred annuity",q:"First payment comes m periods late. How do you get P and F?",b:String.raw`
+<div class="f">\[ P=\frac{A}{i}\left[\frac{(1+i)^{n}-1}{(1+i)^{n}}\right](1+i)^{-m} \]
+\[ F=\frac{A}{i}\left[(1+i)^{n}-1\right] \]</div>
+<ul><li>$m$ = deferred periods = (time of first payment) $-\,1$</li><li>$n$ = number of payments</li><li>Value the ordinary annuity one period before the first payment ($P_1$), then $P=P_1(1+i)^{-m}$</li><li>$F$ at the last payment ignores $m$. If money sits $m$ more periods: $F_2=F(1+i)^{m}$</li></ul>
+<div class="ex">₱30,000 × 10 yrs, first at end of year 11, 8%: $m=10$, $n=10$, $P=$ ₱93,245.98<br>₱500,000 loan, 5 payments starting year 4, 12%: $m=3$, $A=$ ₱194,870.35</div>`},
+{t:"Perpetuity",q:"Payments forever. What is P, and how do you handle due and deferred?",b:String.raw`
+<div class="f">\[ \text{Ordinary: } P=\frac{A}{i}\qquad \text{Due: } P=A+\frac{A}{i}\qquad \text{Deferred: } P=\frac{A}{i}(1+i)^{-m} \]</div>
+<p>If payment and compounding periods differ, first convert to a rate per payment period (see the rate conversion card).</p>
+<div class="ex">₱5,200 monthly, 16% compounded monthly: $P=$ ₱390,000<br>₱100 at the start of each year, 4%: $P=$ ₱2,600<br>₱1,000 yearly, first payment at end of year 5, 8% ($m=4$): $P=$ ₱9,187.87</div>`},
+{t:"Rate conversion",q:"Payments and compounding don't match. How do you get i?",b:String.raw`
+<div class="f">\[ i=\frac{r}{m}\qquad n=m\,t \]
+\[ (1+i)^{m_1}-1=\left(1+\frac{r}{m_2}\right)^{m_2}-1 \]</div>
+<p>$m_1$ = payments per year, $m_2$ = compoundings per year. Solve for $i$, the rate per <b>payment</b> period, then use it in the annuity or perpetuity formula.</p>
+<div class="ex">₱15,000 semiannual perpetuity, 8% compounded quarterly:<br>$(1+i)^2-1=(1.02)^4-1\Rightarrow i=0.0404$<br>$P=15{,}000/0.0404=$ ₱371,287.13</div>`},
+{t:"Continuous compounding",q:"Annuity compounded continuously. What replaces i, and what are the factors?",b:String.raw`
+<div class="f">\[ i=ER=e^{r}-1 \]
+\[ P=\frac{A}{e^{r}-1}\left[\frac{e^{rn}-1}{e^{rn}}\right]\qquad F=\frac{A}{e^{r}-1}\left(e^{rn}-1\right) \]</div>
+<div class="f">\[ CAF=\frac{e^{rn}-1}{e^{r}-1}\qquad SFF=\frac{e^{r}-1}{e^{rn}-1} \]
+\[ PWF=\frac{1-e^{-rn}}{e^{r}-1}\qquad CRF=\frac{e^{r}-1}{1-e^{-rn}} \]</div>
+<div class="ex">$r=8\%$: $i=e^{0.08}-1=0.083287$</div>`},
+{t:"Multi-part cash flows",q:"Cash flow with different segments. What is the strategy?",b:String.raw`
+<ul><li>Draw the timeline. Label each segment: ordinary, deferred, or perpetuity.</li><li>Find $m$ and $n$ for each segment, then discount each to time 0.</li><li>Add the pieces.</li><li>"Equivalent uniform annual cost": get total $P$, then solve $A$ from the ordinary-annuity formula.</li><li>"Invest, then wait": find $F_1$ at the last payment, then $F=F_1(1+i)^{m}$.</li><li>Lump sum to fund later withdrawals: $P=P_A(1+i)^{-m}$.</li></ul>
+<div class="f">\[ P=P_1+P_2+P_3 \]</div>
+<div class="ex">Scholarship ₱4k (5 yrs), ₱6k (next 5), ₱9k forever, 12%:<br>14,419.10 + 12,272.68 + 24,147.99 = ₱50,839.77<br>Invest ₱100k/yr for 10 yrs, wait 10 yrs, 8%: $F=$ ₱3,127,540.18</div>`}
+];
+const deck=document.getElementById('deck');
+cards.forEach((c,i)=>{
+ const b=document.createElement('button');b.type='button';b.className='card';b.dataset.side='front';
+ b.innerHTML=`<div class="top"><span>${c.t}</span><small>${i+1} of ${cards.length}</small></div>
+ <div class="front"><p class="cue">${c.q}</p><p class="hint">Tap to see the formulas</p></div>
+ <div class="back">${c.b}</div>`;
+ b.addEventListener('click',()=>{b.dataset.side=b.dataset.side==='front'?'back':'front'});
+ deck.appendChild(b);
+});
+if(window.MathJax&&MathJax.typesetPromise){MathJax.typesetPromise()}else{window.addEventListener('load',()=>MathJax.typesetPromise&&MathJax.typesetPromise())}
+let showAll=false;
+document.getElementById('all').addEventListener('click',e=>{
+ showAll=!showAll;
+ document.querySelectorAll('.card').forEach(x=>x.dataset.side=showAll?'back':'front');
+ e.target.textContent=showAll?'Show topics only':'Show all formulas';
+});
+</script>
+</body>
+</html>
